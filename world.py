@@ -1,6 +1,6 @@
-from Iterators.JsonIterator import MyJson
+from JsonIterator import MyJson
 from countries import get_country_code
-from RefactoredCharts.world_population_chart import WorldPopulationChart
+from world_population_chart import WorldPopulationChart
 from pygal.style import RotateStyle as RS, LightColorizedStyle as LCS
 
 filename = 'population_data.json'

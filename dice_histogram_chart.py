@@ -1,6 +1,6 @@
 import pygal
 
-from RefactoredCharts.chart_super_class import ChartSuperClass
+from chart_super_class import ChartSuperClass
 
 
 class DiceHistogram(ChartSuperClass):

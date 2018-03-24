@@ -1,4 +1,4 @@
-from Iterators.CustomIteratorInterface import CustomIteratorInterface
+from CustomIteratorInterface import CustomIteratorInterface
 import json
 
 

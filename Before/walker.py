@@ -1,5 +1,4 @@
 from random import choice
-import pickle
 
 
 class Walker:
@@ -30,11 +29,3 @@ class Walker:
 
             self.x_values.append(next_x)
             self.y_values.append(next_y)
-
-    def create_memento(self):
-        return pickle.dumps(vars(self))
-
-    def set_memento(self, memento):
-        previous_state = pickle.loads(memento)
-        vars(self).clear()
-        vars(self).update(previous_state)
