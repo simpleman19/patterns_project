@@ -2,6 +2,8 @@ from die import Die
 from walker import Walker
 
 if __name__ == "__main__":
+    """ test class that ensures the pickling
+        methods for the graph objects work  """
     w = Walker()
     w.fill_walk() 
     print("Walker Initial: " + str(w.num_points))
