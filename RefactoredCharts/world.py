@@ -1,6 +1,6 @@
 import json
 from countries import get_country_code
-from pygal.maps.world import World
+from RefactoredCharts.world_population_chart import WorldPopulationChart
 from pygal.style import RotateStyle as RS, LightColorizedStyle as LCS
 
 filename = 'population_data.json'
@@ -28,10 +28,11 @@ for cc, pop in cc_populations.items():
 
 print(len(cc_pops_1), len(cc_pops_2), len(cc_pops_3))
 wm_style = RS('#336699', base_style=LCS)
-wm = World()
-wm.style = wm_style
+wm = WorldPopulationChart()
+wm.set_style(wm_style)
 wm.title = 'World Population in 2010, by Country'
 wm.add('0-10m', cc_pops_1)
 wm.add('10m-1bn', cc_pops_2)
 wm.add('>1bn', cc_pops_3)
-wm.render_to_file('world_population.svg')
+wm.render('world_population.svg')
+
