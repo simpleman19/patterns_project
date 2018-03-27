@@ -9,16 +9,10 @@ class CustomIteratorInterface(object):
         raise NotImplementedError()
 
     def first(self):
-        if self.values is not None:
-            return self.values[0]
-        else:
-            return None
+        raise NotImplementedError()
 
     def last(self):
-        if self.values is not None:
-            return self.values[len(self.values) - 1]
-        else:
-            return None
+        raise NotImplementedError()
 
     def has_next(self):
         raise NotImplementedError()

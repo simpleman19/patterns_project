@@ -1,13 +1,15 @@
-import json
+from Iterators.JsonIterator import MyJson
 from countries import get_country_code
 from RefactoredCharts.world_population_chart import WorldPopulationChart
 from pygal.style import RotateStyle as RS, LightColorizedStyle as LCS
 
 filename = 'population_data.json'
 with open(filename) as f:
-    pop_data = json.load(f)
+    pop_data = MyJson(f.read())
 cc_populations = {}
-for pop_dict in pop_data:
+pop_data_iterator = pop_data.get_iterator()
+while pop_data_iterator.has_next():
+    pop_dict = pop_data_iterator.next()
     if pop_dict['Year'] == '2010':
         country_name = pop_dict['Country Name']
         # need an int value, but have to convert to
