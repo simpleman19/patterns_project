@@ -6,6 +6,9 @@ class ChartSuperClass(object):
     y_labels = []
     y_title = []
 
+    def __init__(self):
+        raise NotImplementedError()
+
     def add(self, title, values):
         self.chart.add(title, values)
 
