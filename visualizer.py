@@ -1,1 +1,7 @@
-#super class for the graphs defines configure, style, render
+class Visualizer:
+
+    def configure(self):
+        raise NotImplementedError
+
+    def style_render(self):
+        raise NotImplementedError
