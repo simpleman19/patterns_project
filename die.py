@@ -1,6 +1,7 @@
 from random import randint
 import pickle
 
+
 class Die:
     """ A class representing a die  """
 
