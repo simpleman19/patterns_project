@@ -1,10 +1,15 @@
 from world import WorldVisualizer
 from die_visualizer import DiceVisualizer
+from api_visualizer import APIVisualizer
 from tkinter import *
 
 
 class App:
-    """ Custom GUI class for creating graphs """
+    """ Custom GUI class for creating graphs
+        Provides an example of event-driven programming
+        Enhancements: Use the Mementos in Dice and Walkers (specify parameters for Dice and Walker Visualizers)
+                      Make the GUI prettier (add parameters for Dice and Walkers. Maybe filepickers for input)
+                      Add additional Behavioral Design Patterns """
 
     def __init__(self, master):
         """ Should have a GUI element for each graph """
@@ -22,6 +27,11 @@ class App:
         dice_b = Button(frame, text='Dice', command=graph_dice)
         dice_b.grid(row=1, columnspan=2)
         # Random Walk
+        # High - Low Temperature (Death Valley)
+        # GitHub Most Popular Python Projects (API Scrape)
+        api_b = Button(frame, text='Github API', command=graph_api_scrape)
+        api_b.grid(row=3, columnspan=2)
+        # Simple Scatter Plot
 
 
 def graph_world():
@@ -38,7 +48,15 @@ def graph_dice():
     dv = DiceVisualizer()
     dv.configure()
     dv.style_render()
-    print("Dice Frequency graph created")
+    print("Dice Frequency graph created.")
+
+
+def graph_api_scrape():
+    """ Class method: Creates a histogram detailing the most popular Python projects on Github """
+    av = APIVisualizer()
+    av.configure()
+    av.style_render()
+    print("GitHub API graph created.")
 
 
 root = Tk()
