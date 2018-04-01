@@ -10,6 +10,3 @@ class DiceHistogram(ChartSuperClass):
 
     def set_style(self, style):
         self.chart.style = style
-
-    def render_to_file(self, filename):
-        self.chart.render_to_file(filename)

@@ -52,7 +52,8 @@ def graph_dice():
 
 
 def graph_api_scrape():
-    """ Class method: Creates a histogram detailing the most popular Python projects on Github """
+    """ Class method: Creates a histogram detailing the most popular Python projects on Github
+        Demonstrates observer pattern as the API values change regularly """
     av = APIVisualizer()
     av.configure()
     av.style_render()

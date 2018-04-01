@@ -1,16 +1,21 @@
 import matplotlib.pyplot as plt
 from walker import Walker
 from visualizer import Visualizer
+from caretaker import Caretaker as ct
 
 
 class WalkerVisualizer(Visualizer):
     """ Visualizes a random walk of data. """
+
+    c = ct()
 
     def __init__(self):
         self.w = Walker(50000)
 
     def configure(self):
         self.w.fill_walk()
+        # setup walker memento
+        WalkerVisualizer.c.set_walker_memento(self.w.num_points, self.w.x_values, self.w.y_values)
 
     def style_render(self):
         plt.figure(figsize=(10, 6))

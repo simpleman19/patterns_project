@@ -1,12 +1,15 @@
 from die import Die
 from dice_histogram_chart import DiceHistogram
 from visualizer import Visualizer
+from caretaker import Caretaker as ct
 
 
 class DiceVisualizer(Visualizer):
     """ Visualizes a histogram of dice frequencies.
         At present: supports two 6 sided dice.
         Enhancement: add functionality for any number of dice with any number of sides. """
+
+    c = ct()
 
     def __init__(self):
         self.die_1 = Die()
@@ -22,6 +25,8 @@ class DiceVisualizer(Visualizer):
         for value in range(2, max_result + 1):
             frequency = self.results.count(value)
             self.frequencies.append(frequency)
+        # setup caretaker with a dice memento
+        DiceVisualizer.c.set_dice_memento(self.die_1, self.die_2, self.frequencies, self.results)
 
     def style_render(self):
         hist = DiceHistogram()
@@ -30,7 +35,7 @@ class DiceVisualizer(Visualizer):
         hist.x_title = "Result"
         hist.y_title = "Frequency of Result"
         hist.add('D6 + D6', self.frequencies)
-        hist.render_to_file('dice_visual.svg')
+        hist.render('dice_visual.svg')
 
 
 if __name__ == "__main__":

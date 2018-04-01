@@ -14,7 +14,7 @@ class ChartSuperClass(object):
 
     def render(self, filename):
         self.chart.title = self.title
-        if len(self.y_labels) != 0:
+        if len(self.x_labels) != 0:
             self.chart.x_labels = self.x_labels
         self.chart.x_title = self.x_title
         if len(self.y_labels) != 0:
