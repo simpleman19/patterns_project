@@ -37,9 +37,24 @@ class DiceVisualizer(Visualizer):
         hist.add('D6 + D6', self.frequencies)
         hist.render('dice_visual.svg')
 
+    def reprint(self):
+        if DiceVisualizer.c.frequencies is not None:
+            hist = DiceHistogram()
+            hist.title = "Results of rolling two D6 1000 times"
+            hist.x_labels = ['2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+            hist.x_title = "Result"
+            hist.y_title = "Frequency of Result"
+            hist.add('D6 + D6', DiceVisualizer.c.frequencies)
+            hist.render('dice_visual.svg')
+        else:
+            print("cannot reprint a graph that hasn't been printed the first time!")
+
 
 if __name__ == "__main__":
     """ Test code """
     dv = DiceVisualizer()
     dv.configure()
     dv.style_render()
+    print("printed a graph via configure and style")
+    dv.reprint()
+    print("reprinted the graph via caretaker/memento")
