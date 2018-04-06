@@ -10,8 +10,8 @@ from tkinter import *
 class App:
     """ Custom GUI class for creating graphs
         Provides an example of event-driven programming
-        Enhancements: Use the Mementos in Dice and Walkers (specify parameters for Dice and Walker Visualizers)
-                      Make the GUI prettier (add parameters for Dice and Walkers. Maybe filepickers for input)
+        Enhancements: Make the GUI prettier
+                      Make graphs more flexible via the inclusion of GUI-specifiable parameters
                       Add additional Behavioral Design Patterns """
 
     dice_redo_b = None
