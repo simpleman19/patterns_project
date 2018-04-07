@@ -51,7 +51,7 @@ class DiceVisualizer(Visualizer):
 
 
 if __name__ == "__main__":
-    """ Test code """
+    """ TDD: Test code """
     dv = DiceVisualizer()
     dv.configure()
     dv.style_render()
