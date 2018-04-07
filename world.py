@@ -18,6 +18,7 @@ class WorldVisualizer(Visualizer):
     def configure(self):
         filename = 'population_data.json'
         with open(filename) as f:
+            # this is a custom iterator--the Iterator pattern
             pop_data = MyJson(f.read())
         cc_populations = {}
         pop_data_iterator = pop_data.get_iterator()
@@ -53,7 +54,7 @@ class WorldVisualizer(Visualizer):
 
 
 if __name__ == "__main__":
-    """ Test code """
+    """ TDD: Test code """
     wv = WorldVisualizer()
     wv.configure()
     wv.style_render()

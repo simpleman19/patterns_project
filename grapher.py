@@ -1,3 +1,4 @@
+from visualizer import Visualizer
 from world import WorldVisualizer
 from die_visualizer import DiceVisualizer
 from walker_visualizer import WalkerVisualizer
@@ -9,16 +10,22 @@ from tkinter import *
 
 class App:
     """ Custom GUI class for creating graphs
-        Provides an example of event-driven programming
+        Provides an example of Event-Driven programming
         Enhancements: Make the GUI prettier
                       Make graphs more flexible via the inclusion of GUI-specifiable parameters
                       Add additional Behavioral Design Patterns """
 
+    # using the visualizer at the class level establishes the Template Method AND Observer patterns.
+    # the visualizer can also be considered a Null Object because it throws errors if it is used
+    # directly. This is because it must have something to visualize!
+    v = Visualizer()
+    # using these redo buttons allows the previous graph to be reprinted. This is the Memento pattern
     dice_redo_b = None
     walker_redo_b = None
 
     def __init__(self, master):
-        """ Should have a GUI element for each graph """
+        """ Should have at least one GUI element for each graph.
+            Class level components are only used if the component is needed in two commands. """
 
         frame = Frame(master)
         frame.pack()
@@ -53,17 +60,17 @@ class App:
 def graph_world():
     """ Class method: Creates a world population graph """
     # configure then style_render is the order needed per template
-    wv = WorldVisualizer()
-    wv.configure()
-    wv.style_render()
+    App.v = WorldVisualizer()
+    App.v.configure()
+    App.v.style_render()
     print("World Population graph from 2010 created.")
 
 
 def graph_dice():
     """ Class method: Creates a dice frequency histogram """
-    dv = DiceVisualizer()
-    dv.configure()
-    dv.style_render()
+    App.v = DiceVisualizer()
+    App.v.configure()
+    App.v.style_render()
     print("Dice Frequency graph created.")
     # The regraph button should only be enabled after an initial graphing (i.e. memento is populated)
     App.dice_redo_b.configure(state=NORMAL)
@@ -71,49 +78,49 @@ def graph_dice():
 
 def regraph_dice():
     """ Class method: Recreates the last drawn dice frequency histogram """
-    dv = DiceVisualizer()
-    dv.reprint()
+    App.v = DiceVisualizer()
+    App.v.reprint()
     print("Previous Dice Frequency graph restored.")
 
 
 def graph_walk():
     """ Class method: Creates a random walk """
-    wv = WalkerVisualizer()
-    wv.configure()
-    wv.style_render()
+    App.v = WalkerVisualizer()
+    App.v.configure()
+    App.v.style_render()
     print("Random Walk created.")
     App.walker_redo_b.configure(state=NORMAL)
 
 
 def regraph_walk():
     """ Class method: Recreates the last random walk """
-    wv = WalkerVisualizer()
-    wv.reprint()
+    App.v = WalkerVisualizer()
+    App.v.reprint()
     print("Previous Random Walk graph restored.")
 
 
 def graph_temp():
     """ Class method: Creates a temperature graph with highs and lows """
-    tv = TemperatureVisualizer()
-    tv.configure()
-    tv.style_render()
+    App.v = TemperatureVisualizer()
+    App.v.configure()
+    App.v.style_render()
     print("Temperature graph created.")
 
 
 def graph_api_scrape():
     """ Class method: Creates a histogram detailing the most popular Python projects on Github
         Demonstrates observer pattern as the API values change regularly """
-    av = APIVisualizer()
-    av.configure()
-    av.style_render()
+    App.v = APIVisualizer()
+    App.v.configure()
+    App.v.style_render()
     print("GitHub API graph created.")
 
 
 def graph_function():
     """ Class method: Creates a graph of a simple function"""
-    fv = FunctionVisualizer()
-    fv.configure()
-    fv.style_render()
+    App.v = FunctionVisualizer()
+    App.v.configure()
+    App.v.style_render()
     print("Function graph created.")
 
 

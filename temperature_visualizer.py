@@ -45,7 +45,7 @@ class TemperatureVisualizer(Visualizer):
 
 
 if __name__ == "__main__":
-    """ Test Code """
+    """ TDD: Test Code """
     tv = TemperatureVisualizer()
     tv.configure()
     tv.style_render()

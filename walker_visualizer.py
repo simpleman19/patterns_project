@@ -40,7 +40,7 @@ class WalkerVisualizer(Visualizer):
 
 
 if __name__ == "__main__":
-    """ Test Code """
+    """ TDD: Test Code """
     wv = WalkerVisualizer()
     wv.configure()
     wv.style_render()

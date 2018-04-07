@@ -2,7 +2,7 @@ from die import Die
 from walker import Walker
 
 if __name__ == "__main__":
-    """ test class that ensures the pickling
+    """ TDD: test class that ensures the pickling
         methods for the graph objects work  """
     w = Walker()
     w.fill_walk() 
@@ -17,4 +17,4 @@ if __name__ == "__main__":
     d_memento = d.create_memento()
     d.set_memento(d_memento)
     print("Die Final: " + str(d.num_sides))
-    
+
