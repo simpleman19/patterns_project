@@ -35,7 +35,7 @@ class DiceVisualizer(Visualizer):
         hist.x_title = "Result"
         hist.y_title = "Frequency of Result"
         hist.add('D6 + D6', self.frequencies)
-        hist.render('dice_visual.svg')
+        hist.render('dice_visual.svg', browser=True)
 
     def reprint(self):
         if DiceVisualizer.c.frequencies is not None:
@@ -45,7 +45,7 @@ class DiceVisualizer(Visualizer):
             hist.x_title = "Result"
             hist.y_title = "Frequency of Result"
             hist.add('D6 + D6', DiceVisualizer.c.frequencies)
-            hist.render('dice_visual.svg')
+            hist.render('dice_visual.svg', browser=True)
         else:
             print("cannot reprint a graph that hasn't been printed the first time!")
 

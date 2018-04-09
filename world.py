@@ -50,7 +50,7 @@ class WorldVisualizer(Visualizer):
         wm.add('0-10m', self.cc_pops_1)
         wm.add('10m-1bn', self.cc_pops_2)
         wm.add('>1bn', self.cc_pops_3)
-        wm.render('world_population.svg')
+        wm.render('world_population.svg', browser=True)
 
 
 if __name__ == "__main__":
