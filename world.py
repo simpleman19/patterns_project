@@ -10,7 +10,8 @@ class WorldVisualizer(Visualizer):
         defines the configure and style_render methods that this
         visualizer should implement. """
 
-    STR_REPR = 'world'
+    STR_REPR = 'WorldVisualizer'
+    COMMAND = 'visualizer: {}, split1: {}, split2: {}'.format(STR_REPR, 1000000, 1000000000)
 
     def __init__(self):
         self.cc_pops_1 = {}

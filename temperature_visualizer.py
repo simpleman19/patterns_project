@@ -7,7 +7,8 @@ from visualizer import Visualizer
 class TemperatureVisualizer(Visualizer):
     """ Visualizes a .csv of weather data """
 
-    STR_REPR = 'temperature'
+    STR_REPR = 'TempVisualizer'
+    COMMAND = 'visualizer: {}, filename: {}'.format(STR_REPR, 'death_valley_2014.csv')
 
     def __init__(self):
         self.filename = 'death_valley_2014.csv'

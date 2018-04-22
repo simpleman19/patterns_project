@@ -9,7 +9,8 @@ class APIVisualizer(Visualizer):
         With minor tweaks, it could be used to
         Visualize data from other web APIs as well. """
 
-    STR_REPR = 'api'
+    STR_REPR = 'API-Visualizer'
+    COMMAND = 'visualizer: {}, language: {}'.format(STR_REPR, 'python')
 
     def __init__(self):
         self.url = 'https://api.github.com/search/repositories?sort=stars&q=language:'

@@ -64,40 +64,16 @@ class App:
         row += 1
 
         # World Population
-        self.gui_items[WorldVisualizer.STR_REPR] = \
-            {'class': WorldVisualizer,
-             'column': 0,
-             'command': 'visualizer: {}, split1: {}, split2: {}'.format(WorldVisualizer.STR_REPR, 1000000, 1000000000),
-             'item': Button(frame, text='Load World Command',
-                            command=(lambda e=WorldVisualizer.STR_REPR: self.set_command(e)))
-             }
+        self.gui_items[WorldVisualizer.STR_REPR] = build_gui_item(frame, WorldVisualizer, self.set_command)
 
         # High - Low Temperature (Death Valley)
-        self.gui_items[TemperatureVisualizer.STR_REPR] = \
-            {'class': TemperatureVisualizer,
-             'column': 0,
-             'command': 'visualizer: {}, filename: {}'.format(TemperatureVisualizer.STR_REPR, 'death_valley_2014.csv'),
-             'item': Button(frame, text='Load Temp H/L Command',
-                            command=(lambda e=TemperatureVisualizer.STR_REPR: self.set_command(e)))
-             }
+        self.gui_items[TemperatureVisualizer.STR_REPR] = build_gui_item(frame, TemperatureVisualizer, self.set_command)
 
         # GitHub Most Popular Python Projects (API Scrape)
-        self.gui_items[APIVisualizer.STR_REPR] = \
-            {'class': APIVisualizer,
-             'command': 'visualizer: {}, language: {}'.format(APIVisualizer.STR_REPR, 'python'),
-             'column': 0,
-             'item': Button(frame, text='Load Github API Command',
-                            command=(lambda e=APIVisualizer.STR_REPR: self.set_command(e)))
-             }
+        self.gui_items[APIVisualizer.STR_REPR] = build_gui_item(frame, APIVisualizer, self.set_command)
 
         # Simple Scatter Plot
-        self.gui_items[FunctionVisualizer.STR_REPR] = \
-            {'class': FunctionVisualizer,
-             'column': 0,
-             'command': 'visualizer: {}, power: {}'.format(FunctionVisualizer.STR_REPR, 2),
-             'item': Button(frame, text='Load Function Command',
-                            command=(lambda e=FunctionVisualizer.STR_REPR: self.set_command(e)))
-             }
+        self.gui_items[FunctionVisualizer.STR_REPR] = build_gui_item(frame, FunctionVisualizer, self.set_command)
 
         # Setup grid
         for x in self.gui_items.keys():
@@ -119,6 +95,15 @@ class App:
 
     def set_command(self, repr):
         self.command.set(self.gui_items[repr]['command'])
+
+
+def build_gui_item(frame, item_class, set_command_ptr):
+    return {'class': item_class,
+            'column': 0,
+            'command': item_class.COMMAND,
+            'item': Button(frame, text='Load {} Command'.format(item_class.STR_REPR),
+                           command=(lambda e=item_class.STR_REPR: set_command_ptr(e)))
+            }
 
 
 def graph_dice():

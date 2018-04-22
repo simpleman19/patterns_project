@@ -3,6 +3,7 @@ class Visualizer:
         Used to enforce Template Methods. """
 
     STR_REPR = 'Visualizer'
+    COMMAND = 'NotImplemented'
 
     def configure(self):
         raise NotImplementedError

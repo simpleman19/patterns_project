@@ -5,7 +5,8 @@ from visualizer import Visualizer
 class FunctionVisualizer(Visualizer):
     """ Graphs a simple mathematical function """
 
-    STR_REPR = 'function'
+    STR_REPR = 'FuncVisualizer'
+    COMMAND = 'visualizer: {}, power: {}'.format(STR_REPR, 2)
 
     def __init__(self):
         # default graph is square function
