@@ -23,79 +23,134 @@ class App:
     dice_redo_b = None
     walker_redo_b = None
 
+    col_span = 4
+
+    gui_items = {}
+
     def __init__(self, master):
         """ Should have at least one GUI element for each graph.
             Class level components are only used if the component is needed in two commands. """
 
-        frame = Frame(master)
+        frame = Frame(master, width=1000, height=1000)
         frame.pack()
+
+        self.command = StringVar()
+
+        row = 0
         # when specifying a command, do not specify arguments. Just give it the name.
         # otherwise it will call the function on when declared. Not as an event.
         #
         # add new GUI items here:
-        # World Population
-        self.world_b = Button(frame, text='World', command=graph_world)
-        self.world_b.grid(row=1, column=0, columnspan=2)
+
         # Dice Frequency. Note a callback function enables the redo_b, so it is class scoped.
         self.dice_b = Button(frame, text='Dice', command=graph_dice)
-        self.dice_b.grid(row=2, column=0, columnspan=2)
+        self.dice_b.grid(row=row, column=0, columnspan=2)
         App.dice_redo_b = Button(frame, text='Dice Redo', command=regraph_dice, state=DISABLED)
-        App.dice_redo_b.grid(row=2, column=2, columnspan=2)
+        App.dice_redo_b.grid(row=row, column=2, columnspan=2)
+        row += 1
+
         # Random Walk
         self.walker_b = Button(frame, text='Random Walk', command=graph_walk)
-        self.walker_b.grid(row=3, column=0, columnspan=2)
+        self.walker_b.grid(row=row, column=0, columnspan=2)
         App.walker_redo_b = Button(frame, text='Walk Redo', command=regraph_walk, state=DISABLED)
-        App.walker_redo_b.grid(row=3, column=2, columnspan=2)
+        App.walker_redo_b.grid(row=row, column=2, columnspan=2)
+        row += 1
+
+        # Command Input
+        self.command_input = Entry(frame, text="Command:", textvariable=self.command)
+        self.command_input.grid(row=row, column=0, columnspan=4)
+        self.run_command_b = Button(frame, text="Run Command", command=(lambda e=self.command_input: self.run_command(e.get())))
+        self.run_command_b.grid(row=row, column=4, columnspan=2)
+        row += 1
+
+        # World Population
+        self.gui_items[WorldVisualizer.STR_REPR] = \
+            {'class': WorldVisualizer,
+             'column': 0,
+             'command': 'visualizer: {}, split1: {}, split2: {}'.format(WorldVisualizer.STR_REPR, 1000000, 1000000000),
+             'item': Button(frame, text='Load World Command',
+                            command=(lambda e=WorldVisualizer.STR_REPR: self.set_command(e)))
+             }
+
         # High - Low Temperature (Death Valley)
-        self.temp_b = Button(frame, text='Temp H/L', command=graph_temp)
-        self.temp_b.grid(row=4, column=0, columnspan=2)
+        self.gui_items[TemperatureVisualizer.STR_REPR] = \
+            {'class': TemperatureVisualizer,
+             'column': 0,
+             'command': 'visualizer: {}, filename: {}'.format(TemperatureVisualizer.STR_REPR, 'death_valley_2014.csv'),
+             'item': Button(frame, text='Load Temp H/L Command',
+                            command=(lambda e=TemperatureVisualizer.STR_REPR: self.set_command(e)))
+             }
+
         # GitHub Most Popular Python Projects (API Scrape)
-        self.api_b = Button(frame, text='Github API', command=graph_api_scrape)
-        self.api_b.grid(row=5, column=0, columnspan=2)
+        self.gui_items[APIVisualizer.STR_REPR] = \
+            {'class': APIVisualizer,
+             'command': 'visualizer: {}, language: {}'.format(APIVisualizer.STR_REPR, 'python'),
+             'column': 0,
+             'item': Button(frame, text='Load Github API Command',
+                            command=(lambda e=APIVisualizer.STR_REPR: self.set_command(e)))
+             }
+
         # Simple Scatter Plot
-        self.func_b = Button(frame, text='Function', command=graph_function)
-        self.func_b.grid(row=6, column=0, columnspan=2)
+        self.gui_items[FunctionVisualizer.STR_REPR] = \
+            {'class': FunctionVisualizer,
+             'column': 0,
+             'command': 'visualizer: {}, power: {}'.format(FunctionVisualizer.STR_REPR, 2),
+             'item': Button(frame, text='Load Function Command',
+                            command=(lambda e=FunctionVisualizer.STR_REPR: self.set_command(e)))
+             }
 
+        # Setup grid
+        for x in self.gui_items.keys():
+            self.gui_items[x]['item'].grid(row=row, column=self.gui_items[x]['column'], columnspan=self.col_span)
+            row += 1
 
-def graph_world():
-    """ Class method: Creates a world population graph """
-    # configure then style_render is the order needed per template
-    App.v = WorldVisualizer()
-    App.v.configure()
-    App.v.style_render()
-    print("World Population graph from 2010 created.")
+    def run_command(self, command):
+        arguments = {}
+        vis = command.split(',', 1)
+        items = vis[1].split(',', 1)
+        for i in items:
+            x = i.split(':')
+            arguments[x[0].strip()] = x[1].strip()
+        gui_item = self.gui_items[vis[0].split(':')[1].strip()]
+        App.v = gui_item['class']()
+        App.v.configure(**arguments)
+        App.v.style_render()
+        print("Ran command: " + command)
+
+    def set_command(self, repr):
+        self.command.set(self.gui_items[repr]['command'])
 
 
 def graph_dice():
     """ Class method: Creates a dice frequency histogram """
-    App.v = DiceVisualizer()
-    App.v.configure()
-    App.v.style_render()
-    print("Dice Frequency graph created.")
+    App.d = DiceVisualizer()
+    App.d.configure()
     # The regraph button should only be enabled after an initial graphing (i.e. memento is populated)
     App.dice_redo_b.configure(state=NORMAL)
+    App.d.style_render()
+    print("Dice Frequency graph created.")
 
 
 def regraph_dice():
     """ Class method: Recreates the last drawn dice frequency histogram """
-    App.v = DiceVisualizer()
-    App.v.reprint()
+    App.d = DiceVisualizer()
+    App.d.reprint()
     print("Previous Dice Frequency graph restored.")
 
 
 def graph_walk():
     """ Class method: Creates a random walk """
-    App.v = WalkerVisualizer()
-    App.v.configure()
-    App.v.style_render()
-    print("Random Walk created.")
+    App.w = WalkerVisualizer()
+    App.w.configure()
     App.walker_redo_b.configure(state=NORMAL)
+    App.w.style_render()
+    print("Random Walk created.")
 
 
 def regraph_walk():
     """ Class method: Recreates the last random walk """
-    App.v = WalkerVisualizer()
-    App.v.reprint()
+    App.w = WalkerVisualizer()
+    App.w.reprint()
     print("Previous Random Walk graph restored.")
 
 

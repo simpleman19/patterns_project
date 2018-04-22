@@ -9,6 +9,8 @@ class DiceVisualizer(Visualizer):
         At present: supports two 6 sided dice.
         Enhancement: add functionality for any number of dice with any number of sides. """
 
+    STR_REPR = 'dice'
+
     c = ct()
 
     def __init__(self):
@@ -17,7 +19,7 @@ class DiceVisualizer(Visualizer):
         self.results = []
         self.frequencies = []
 
-    def configure(self):
+    def configure(self, **kwargs):
         for roll_num in range(1000):
             result = self.die_1.roll() + self.die_2.roll()
             self.results.append(result)

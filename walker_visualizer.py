@@ -7,6 +7,8 @@ from caretaker import Caretaker as ct
 class WalkerVisualizer(Visualizer):
     """ Visualizes a random walk of data. """
 
+    STR_REPR = 'walker'
+
     c = ct()
 
     def __init__(self):

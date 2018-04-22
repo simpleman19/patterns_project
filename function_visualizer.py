@@ -5,18 +5,24 @@ from visualizer import Visualizer
 class FunctionVisualizer(Visualizer):
     """ Graphs a simple mathematical function """
 
+    STR_REPR = 'function'
+
     def __init__(self):
         # default graph is square function
-        self.x_values = list(range(1001))
+        self.power = 2
+        self.x_values = list(range(-100, 100))
         self.y_values = [x**2 for x in self.x_values]
 
-    def configure(self):
+    def configure(self, power=None):
+        if power is not None:
+            self.power = int(power)
+            self.y_values = [x ** self.power for x in self.x_values]
         plt.scatter(self.x_values, self.y_values, c=self.y_values, cmap=plt.cm.Blues, edgecolor='none', s=40)
 
     def style_render(self):
-        plt.title("Square Numbers", fontsize=24)
+        plt.title('Function Visualizer', fontsize=24)
         plt.xlabel("Value", fontsize=14)
-        plt.ylabel("Square of Value", fontsize=14)
+        plt.ylabel("Value^{}".format(self.power), fontsize=14)
         plt.tick_params(axis='both', which='major', labelsize=14)
         plt.show()
 

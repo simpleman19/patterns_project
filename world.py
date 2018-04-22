@@ -10,12 +10,20 @@ class WorldVisualizer(Visualizer):
         defines the configure and style_render methods that this
         visualizer should implement. """
 
+    STR_REPR = 'world'
+
     def __init__(self):
         self.cc_pops_1 = {}
         self.cc_pops_2 = {}
         self.cc_pops_3 = {}
+        self.split1 = 10000000
+        self.split2 = 1000000000
+        self.scale = 1000000
 
-    def configure(self):
+    def configure(self, split1=None, split2=None):
+        if split1 is not None and split2 is not None:
+            self.split2 = int(split2)
+            self.split1 = int(split1)
         filename = 'population_data.json'
         with open(filename) as f:
             # this is a custom iterator--the Iterator pattern
@@ -34,9 +42,9 @@ class WorldVisualizer(Visualizer):
                     cc_populations[code] = population
 
         for cc, pop in cc_populations.items():
-            if pop < 10000000:
+            if pop < self.split1:
                 self.cc_pops_1[cc] = pop
-            elif pop < 1000000000:
+            elif pop < self.split2:
                 self.cc_pops_2[cc] = pop
             else:
                 self.cc_pops_3[cc] = pop
@@ -47,9 +55,9 @@ class WorldVisualizer(Visualizer):
         wm = WorldPopulationChart()
         wm.set_style(wm_style)
         wm.title = 'World Population in 2010, by Country'
-        wm.add('0-10m', self.cc_pops_1)
-        wm.add('10m-1bn', self.cc_pops_2)
-        wm.add('>1bn', self.cc_pops_3)
+        wm.add('0-{}m'.format(self.split1/self.scale), self.cc_pops_1)
+        wm.add('{}m-{}m'.format(self.split1/self.scale, self.split2/self.scale), self.cc_pops_2)
+        wm.add('>{}m'.format(self.split2/self.scale), self.cc_pops_3)
         wm.render('world_population.svg', browser=True)
 
 

@@ -7,13 +7,17 @@ from visualizer import Visualizer
 class TemperatureVisualizer(Visualizer):
     """ Visualizes a .csv of weather data """
 
+    STR_REPR = 'temperature'
+
     def __init__(self):
         self.filename = 'death_valley_2014.csv'
         self.dates = []
         self.highs = []
         self.lows = []
 
-    def configure(self):
+    def configure(self, filename=None):
+        if filename is not None:
+            self.filename = filename
         with open(self.filename) as f:
             reader = csv.reader(f)
             # read in the header row and do nothing with it
