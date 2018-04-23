@@ -50,7 +50,7 @@ class APIVisualizer(Visualizer):
         my_config.show_y_guides = False
         my_config.width = 1000
         chart = pygal.Bar(my_config, style=my_style)
-        chart.title = 'Most-Starred Python Projects on GitHub'
+        chart.title = 'Most-Starred {} Projects on GitHub'.format(self.language)
         chart.x_labels = self.names
         chart.add('', self.plot_dicts)
         chart.render_to_file('{}_repos.svg'.format(self.language))

@@ -80,6 +80,7 @@ class App:
             self.gui_items[x]['item'].grid(row=row, column=self.gui_items[x]['column'], columnspan=self.col_span)
             row += 1
 
+    # Interpreter
     def run_command(self, command):
         arguments = {}
         vis = command.split(',', 1)
@@ -97,6 +98,7 @@ class App:
         self.command.set(self.gui_items[repr]['command'])
 
 
+# Factory
 def build_gui_item(frame, item_class, set_command_ptr):
     return {'class': item_class,
             'column': 0,
@@ -137,32 +139,6 @@ def regraph_walk():
     App.w = WalkerVisualizer()
     App.w.reprint()
     print("Previous Random Walk graph restored.")
-
-
-def graph_temp():
-    """ Class method: Creates a temperature graph with highs and lows """
-    App.v = TemperatureVisualizer()
-    App.v.configure()
-    App.v.style_render()
-    print("Temperature graph created.")
-
-
-def graph_api_scrape():
-    """ Class method: Creates a histogram detailing the most popular Python projects on Github
-        Demonstrates observer pattern as the API values change regularly """
-    App.v = APIVisualizer()
-    App.v.configure()
-    App.v.style_render()
-    print("GitHub API graph created.")
-
-
-def graph_function():
-    """ Class method: Creates a graph of a simple function"""
-    App.v = FunctionVisualizer()
-    App.v.configure()
-    App.v.style_render()
-    print("Function graph created.")
-
 
 root = Tk()
 root.wm_title('Speed Grapher')
